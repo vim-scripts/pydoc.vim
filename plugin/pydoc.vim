@@ -1,8 +1,7 @@
 "pydoc.vim: pydoc integration for vim
 "performs searches and can display the documentation of python modules
-"Author: André Kelpe <fs111@web.de>
-"http://www.uni-hildesheim.de/~akel0055/vim/pydoc.vim
-"
+"Author: André Kelpe <fs111 at web dot de>
+"http://www.vim.org/scripts/script.php?script_id=910
 "This plugin integrates the pydoc into vim. You can view the
 "documentation of a module by using :Pydoc foo.bar.baz or search
 "a word (uses pydoc -k) in the documentation by typing PydocSearch
@@ -42,9 +41,6 @@ function! ShowPyDoc(name, type)
 	setlocal modifiable
 	normal ggdG
 	let s:name2 = substitute(a:name, '(.*', '', 'g' )
-"	if !exists(s:name2)
-"			let s:name2 = a:name
-"	endif	
 	if a:type==1
 		execute  "silent read ! " g:pydoc_cmd . " " . s:name2 
 	else 
@@ -53,7 +49,12 @@ function! ShowPyDoc(name, type)
 	setlocal nomodified
 	set filetype=man
 	normal 1G
-	call Highlight(s:name2)
+ if !exists('g:pydoc_highlight')
+		let g:pydoc_highlight = 1
+	endif
+  if g:pydoc_highlight ==1
+		call Highlight(s:name2)
+	endif	
 endfunction
 
 
