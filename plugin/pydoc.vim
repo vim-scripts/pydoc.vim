@@ -7,8 +7,8 @@
 "documentation of a module by using :Pydoc foo.bar.baz or search
 "a word (uses pydoc -k) in the documentation by typing PydocSearch
 "foobar. You can also view the documentation of the word under the
-"cursor by pressing <F5> or the WORD (see :help WORD) by pressing <F6>.
-"This is very useful if you want to jump to a module which was found by
+"cursor by pressing <leader>pw or the WORD (see :help WORD) by pressing
+"<leader>pW.  "This is very useful if you want to jump to a module which was found by
 "PydocSearch. To have a browser like feeling you can use u and CTRL-R to
 "go back and forward, just like editing normal text.
 
@@ -37,23 +37,26 @@ function! ShowPyDoc(name, type)
 	else
 			exe 'split __doc__'
 	endif
-			setlocal noswapfile
-			set buftype=nofile
-			setlocal modifiable
-			normal ggdG
+	setlocal noswapfile
+	set buftype=nofile
+	setlocal modifiable
+	normal ggdG
+	let s:name2 = substitute(a:name, '(.*', '', 'g' )
+"	if !exists(s:name2)
+"			let s:name2 = a:name
+"	endif	
 	if a:type==1
-		execute  "silent read ! " g:pydoc_cmd . " " . a:name 
+		execute  "silent read ! " g:pydoc_cmd . " " . s:name2 
 	else 
-		execute  "silent read ! ".g:pydoc_cmd. " -k " . a:name 
+		execute  "silent read ! ".g:pydoc_cmd. " -k " . s:name2 
 	endif	
-		setlocal nomodified
-		set filetype=man
-		normal 1G
-		setlocal hlsearch
+	setlocal nomodified
+	set filetype=man
+	normal 1G
 endfunction
 "mappings
-map  <leader>pw :call ShowPyDoc("<C-R><C-W>", 1)<CR> 
-map  <leader>pW :call ShowPyDoc("<C-R><C-A>", 1)<CR> 
+map  <leader>pw :call ShowPyDoc('<C-R><C-W>', 1)<CR> 
+map  <leader>pW :call ShowPyDoc('<C-R><C-A>', 1)<CR> 
 "commands
 command -nargs=1 Pydoc :call ShowPyDoc('<args>', 1)
 command -nargs=*  PydocSearch :call ShowPyDoc('<args>', 0)
