@@ -32,7 +32,6 @@ function! ShowPyDoc(name, type)
 	if !exists('g:pydoc_cmd')
 		let g:pydoc_cmd = 'pydoc'
 	endif
-	normal ggdG
 	if bufnr("__doc__") >0
 			exe "sb __doc__"
 	else
@@ -41,6 +40,7 @@ function! ShowPyDoc(name, type)
 			setlocal noswapfile
 			set buftype=nofile
 			setlocal modifiable
+			normal ggdG
 	if a:type==1
 		execute  "silent read ! " g:pydoc_cmd . " " . a:name 
 	else 
