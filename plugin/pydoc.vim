@@ -44,7 +44,7 @@ function! ShowPyDoc(name, type)
 	if a:type==1
 		execute  "silent read ! " g:pydoc_cmd . " " . a:name 
 	else 
-		execute  "silent read ! ".g:pydoc_cmd. "-k " . a:name 
+		execute  "silent read ! ".g:pydoc_cmd. " -k " . a:name 
 	endif	
 		setlocal nomodified
 		set filetype=man
