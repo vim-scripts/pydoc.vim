@@ -12,6 +12,13 @@
 "PydocSearch. To have a browser like feeling you can use u and CTRL-R to
 "go back and forward, just like editing normal text.
 
+"If you want to use the script and pydoc is not in your PATH, just put a
+"line like  
+
+" let g:pydoc_cmd = \"/usr/bin/pydoc" (without the backslash!!)
+
+"in your .vimrc
+
 
 "pydoc.vim is free software, you can redistribute or modify
 "it under the terms of the GNU General Public License Version 2 or any
@@ -22,24 +29,26 @@
 
 set switchbuf=useopen
 function! ShowPyDoc(name, type)
-normal ggdG
-if bufnr("__doc__") >0
-		exe "sb __doc__"
-else
-		exe 'split __doc__'
-endif
-		setlocal noswapfile
-		set buftype=nofile
-		setlocal modifiable
-if a:type==1
-  execute  "silent read ! pydoc " . a:name 
-else 
-  execute  "silent read ! pydoc -k " . a:name 
-endif	
-"  setlocal nomodifiable
-  setlocal nomodified
-  set filetype=man
-  normal 1G
+	if !exists('g:pydoc_cmd')
+		let g:pydoc_cmd = 'pydoc'
+	endif
+	normal ggdG
+	if bufnr("__doc__") >0
+			exe "sb __doc__"
+	else
+			exe 'split __doc__'
+	endif
+			setlocal noswapfile
+			set buftype=nofile
+			setlocal modifiable
+	if a:type==1
+		execute  "silent read ! " g:pydoc_cmd . " " . a:name 
+	else 
+		execute  "silent read ! ".g:pydoc_cmd. "-k " . a:name 
+	endif	
+		setlocal nomodified
+		set filetype=man
+		normal 1G
 endfunction
 "mappings
 map  <F5> :call ShowPyDoc("<C-R><C-W>", 1)<CR> 
