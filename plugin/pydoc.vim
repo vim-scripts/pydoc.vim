@@ -53,7 +53,22 @@ function! ShowPyDoc(name, type)
 	setlocal nomodified
 	set filetype=man
 	normal 1G
+	call Highlight(s:name2)
 endfunction
+
+
+function! Highlight(name)
+	exe "sb __doc__"
+	set filetype=man
+	syn on
+	exe 'syntax keyword pydoc '.s:name2
+	hi pydoc gui=reverse
+
+endfunction
+
+
+
+
 "mappings
 map  <leader>pw :call ShowPyDoc('<C-R><C-W>', 1)<CR> 
 map  <leader>pW :call ShowPyDoc('<C-R><C-A>', 1)<CR> 
