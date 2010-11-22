@@ -16,4 +16,4 @@ To have a browser like feeling you can use "u" and "CTRL-r" to go back and forwa
 
 If you have suggestions for pydoc.vim, feel free to contact me (fs111 at web dot de) and if you like it, please rate it :-)
 
-P.S.: There is also another script, which integrates pydoc into vim, you can find it here: http://www.vim.org/scripts/script.php?script_id=1112
+The script is now also officially hosted on github: https://github.com/fs111/pydoc.vim
